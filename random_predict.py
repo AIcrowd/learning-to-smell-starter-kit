@@ -1,22 +1,16 @@
 #!/usr/bin/env python
-
+import aicrowd_helpers
 import pandas as pd
 import json
-
+import traceback
 import os
 import random
 
 
 TRAINING_DATASET_PATH = os.getenv("TRAINING_DATASET_PATH", "data/train.csv")
 TEST_DATASET_PATH = os.getenv("TEST_DATASET_PATH", "data/test.csv")
-
 VOCABULARY_PATH = os.getenv("VOCABULARY_PATH", "data/vocabulary.txt")
-
-
-vocabulary = open(VOCABULARY_PATH).read().split()
-
-
-test_df = pd.read_csv(TEST_DATASET_PATH)
+PREDICTIONS_OUTPUT_PATH = os.getenv("PREDICTIONS_OUTPUT_PATH", "data/submission.csv")
 
 
 def generate_sample_submission(df, vocabulary):
@@ -50,11 +44,36 @@ def generate_sample_submission(df, vocabulary):
         "PREDICTIONS" : predictions
     })
 
-sample_submission_df = generate_sample_submission(test_df, vocabulary)
 
-submission_file_path = "submission.csv"
-print("Writing Sample Submission to : ", submission_file_path)
-sample_submission_df.to_csv(
-    submission_file_path,
-    index=False
-)
+def run():
+    ########################################################################
+    # Register Prediction Start
+    ########################################################################
+    aicrowd_helpers.execution_start()
+
+    vocabulary = open(VOCABULARY_PATH).read().split()
+    test_df = pd.read_csv(TEST_DATASET_PATH)
+    sample_submission_df = generate_sample_submission(test_df, vocabulary)
+
+    submission_file_path = "submission.csv"
+    print("Writing Sample Submission to : ", submission_file_path)
+    sample_submission_df.to_csv(
+        PREDICTIONS_OUTPUT_PATH,
+        index=False
+    )
+
+    ########################################################################
+    # Register Prediction Complete
+    ########################################################################
+    aicrowd_helpers.execution_success({
+        "predictions_output_path" : PREDICTIONS_OUTPUT_PATH
+    })
+
+
+if __name__ == "__main__":
+    try:
+        run()
+    except Exception as e:
+        error = traceback.format_exc()
+        print(error)
+        aicrowd_helpers.execution_error(error)
