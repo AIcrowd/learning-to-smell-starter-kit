@@ -20,9 +20,21 @@ def execution_start():
                     }
                 )
 
+def execution_running():
+    ########################################################################
+    # Register Evaluation Start event
+    ########################################################################
+    aicrowd_events.register_event(
+                event_type=aicrowd_events.AICROWD_EVENT_INFO,
+                message="execution_progress",
+                payload={ #Arbitrary Payload
+                    "event_type": "learning_to_smell:execution_progress",
+                    "progress": 0.0
+                    }
+                )
 
-def execution_progress(progress_payload):
-    image_ids = progress_payload["image_ids"]
+
+def execution_progress(progress):
     ########################################################################
     # Register Evaluation Progress event
     ########################################################################
@@ -31,18 +43,15 @@ def execution_progress(progress_payload):
                 message="execution_progress",
                 payload={ #Arbitrary Payload
                     "event_type": "learning_to_smell:execution_progress",
-                    "image_ids" : image_ids
+                    "progress" : progress
                     }
                 )
 
-def execution_success(payload):
-    predictions_output_path = payload["predictions_output_path"]
+def execution_success():
     ########################################################################
     # Register Evaluation Complete event
     ########################################################################
-    expected_output_path = os.getenv("PREDICTIONS_OUTPUT_PATH", False)
-    if expected_output_path and expected_output_path != predictions_output_path:
-        raise Exception("Please write the output to the path specified in the environment variable : PREDICTIONS_OUTPUT_PATH instead of {}".format(predictions_output_path))
+    predictions_output_path = os.getenv("PREDICTIONS_OUTPUT_PATH", False)
 
     aicrowd_events.register_event(
                 event_type=aicrowd_events.AICROWD_EVENT_SUCCESS,
