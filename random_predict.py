@@ -46,3 +46,7 @@ class RandomPredictor(L2SPredictor):
     def train(self):
         pass
 
+if __name__ == "__main__":
+    submission = RandomPredictor()
+    submission.run()
+    print("Successfully generated predictions!")
