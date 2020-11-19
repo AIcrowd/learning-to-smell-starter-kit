@@ -86,3 +86,6 @@ def yesno(question):
     if ans == 'y':
         return True
     return False
+
+def is_grading():
+    return os.getenv("AICROWD_IS_GRADING", False)

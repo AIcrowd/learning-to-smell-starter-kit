@@ -12,8 +12,8 @@ submission = FingerprintPredictor()
 
 
 import __main__ as main
-from evaluator.aicrowd_helpers import yesno
-if hasattr(main, '__file__'):
+from evaluator.aicrowd_helpers import yesno, is_grading
+if not is_grading:
     # This will not run during online evaluation
     run_train = yesno("Do you want to run training phase?")
     if run_train:

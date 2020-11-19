@@ -110,6 +110,6 @@ class FingerprintPredictor(L2SPredictor):
         return unpacked
 
 if __name__ == "__main__":
-    submission = RandomPredictor()
+    submission = FingerprintPredictor()
     submission.run()
     print("Successfully generated predictions!")
