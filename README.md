@@ -86,13 +86,20 @@ The evaluator will use `run.sh` as the entrypoint, which in turn uses `predict.p
 You can refer to [random_predict.py](random_predict.py) for structuring your codes. We will be running your code as specified in `evaluator/learning_to_smell.py`. The class have placeholders for testing code, but isn't _required_ to make submission.
 
 ```
-class SuperCoolPredictor:
+from evaluator.learning_to_smell import L2SPredictor
+class SuperCoolPredictor(L2SPredictor):
     """
     Below paths will be preloaded for you, you can read them as you like.
     """
     self.training_data_path = None
     self.test_data_path = None
     self.vocabulary_path = None
+
+    """
+    You can do any preprocessing required for your codebase here like loading up models into memory, etc.
+    """
+    def predict_setup(self):
+        pass
 
     """
     This function will be called for all the smiles string one by one during the evaluation.
@@ -103,11 +110,6 @@ class SuperCoolPredictor:
         [...]
         return SENTENCES
 
-    """
-    You can do any preprocessing required for your codebase here like loading up models into memory, etc.
-    """
-    def predict_setup(self):
-        pass
 ```
 
 #### Timeouts
