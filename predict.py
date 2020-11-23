@@ -3,6 +3,7 @@ Import implementations you want to play around with here
 """
 from random_predict import RandomPredictor
 from fingerprint_predict import FingerprintPredictor
+from java_random_predict import JavaRandomPredictor
 
 """
 The implementation you want to submit as your submission
