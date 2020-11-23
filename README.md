@@ -80,7 +80,7 @@ This file is used to identify your submission as a part of the Learning to Smell
 You can specify software runtime of your code by modifying the included [requirements.txt](requirements.txt). The submission support adding custom conda environment, apt packages, Dockerfile and lot's more. Guide for advanced users is present [here](https://discourse.aicrowd.com/t/how-to-specify-runtime-environment-for-your-submission/2274).
 
 #### Code Entrypoint
-The evaluator will use `submission.py` as the entrypoint. Please remember to instantiate your class in the same. This repository includes a sample `submission.py` file.
+The evaluator will use `run.sh` as the entrypoint, which in turn uses `predict.py`. Please remember to instantiate your class in the same or change `run.sh`.
 
 #### Class Structure
 You can refer to [random_predict.py](random_predict.py) for structuring your codes. We will be running your code as specified in `evaluator/learning_to_smell.py`. The class have placeholders for testing code, but isn't _required_ to make submission.
@@ -112,7 +112,7 @@ class SuperCoolPredictor:
 
 ### Local Debug
 
-You can run your submission locally using `python submission.py` and verify the generated prediction csv.
+You can run your submission locally using `python3 predict.py` and verify the generated prediction csv.
 
 
 # 🚀 Making submission 
