@@ -92,7 +92,7 @@ In order to test end to end pipeline, you can make debug submission as well by m
 The evaluator will use `run.sh` as the entrypoint, which in turn uses `predict.py`. Please remember to instantiate your class in the same or change `run.sh`.
 
 #### Class Structure
-You can refer to [random_predict.py](random_predict.py) for structuring your codes. We will be running your code as specified in `evaluator/learning_to_smell.py`. The class have placeholders for testing code, but isn't _required_ to make submission.
+You can refer to [random_predict.py](random_predict.py) for structuring your codes. We will be running your code as specified in `evaluator/learning_to_smell.py`. The class has placeholders for testing code, but it isn't _required_ for making submission.
 
 ```
 class SuperCoolPredictor:
