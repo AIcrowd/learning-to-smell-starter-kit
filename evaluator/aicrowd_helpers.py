@@ -77,15 +77,5 @@ def execution_error(error):
                 blocking=True
                 )
 
-def yesno(question):
-    prompt = f'{question} ? (y/n): '
-    ans = input(prompt).strip().lower()
-    if ans not in ['y', 'n']:
-        print(f'{ans} is invalid, please try again...')
-        return yesno(question)
-    if ans == 'y':
-        return True
-    return False
-
 def is_grading():
     return os.getenv("AICROWD_IS_GRADING", False)

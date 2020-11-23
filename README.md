@@ -110,6 +110,11 @@ class SuperCoolPredictor:
         pass
 ```
 
+#### Timeouts
+
+* Prediction setup i.e. `def predict_setup` has timeout of 10 minutes (600 seconds)
+* Prediction i.e. `def predict` has timeout of 1 second per smile string.
+
 ### Local Debug
 
 You can run your submission locally using `python3 predict.py` and verify the generated prediction csv.
