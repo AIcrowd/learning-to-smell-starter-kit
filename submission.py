@@ -7,17 +7,9 @@ from fingerprint_predict import FingerprintPredictor
 """
 The implementation you want to submit as your submission
 """
-submission = FingerprintPredictor()
-#submission = RandomPredictor()
+# submission = FingerprintPredictor() # This is a class derived from the L2SPredictor class from evaluator.learning_to_smell
+submission = RandomPredictor() # This is a class derived from the L2SPredictor class from evaluator.learning_to_smell
 
-
-import __main__ as main
-from evaluator.aicrowd_helpers import yesno, is_grading
-if not is_grading:
-    # This will not run during online evaluation
-    run_train = yesno("Do you want to run training phase?")
-    if run_train:
-        submission.train()
 
 submission.run()
 print("Successfully generated prediction file at %s" % submission.predictions_output_path)

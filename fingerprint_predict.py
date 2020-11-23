@@ -39,6 +39,14 @@ class FingerprintPredictor(L2SPredictor):
         return [[i] for i in self.train.SENTENCE.value_counts()[:5].index]
 
     """
+    You can do any preprocessing required for your codebase here like loading up models into memory, etc.
+    """
+    def predict_setup(self):
+        self.common_setup()
+        self.nbrs = pickle.load(open(self.pkl_location, 'rb'))
+        pass
+
+    """
     This function will be called for all the smiles string one by one during the evaluation.
     The return need to be a list of list. Example: [["burnt", "oily", "rose"], ["fresh", "citrus", "green"]]
     NOTE: In case you want to load your model, please do so in `predict_setup` function.
@@ -62,15 +70,6 @@ class FingerprintPredictor(L2SPredictor):
         return self.default_prediction()
 
 
-    """
-    You can do any preprocessing required for your codebase here like loading up models into memory, etc.
-    """
-    def predict_setup(self):
-        self.common_setup()
-        self.nbrs = pickle.load(open(self.pkl_location, 'rb'))
-        pass
-
-
     def common_setup(self):
         self.test = pd.read_csv(self.test_data_path)
         self.train = pd.read_csv(self.training_data_path)
@@ -89,7 +88,7 @@ class FingerprintPredictor(L2SPredictor):
     """
     (optional)
     Add your training code in this function, this will be called only during training locally.
-    This will not be executed during the evaluation, remember to save your models/pkl/artifacts properly.
+    and NOT executed during the evaluation, remember to save your models/pkl/artifacts properly.
     You can upload them via git (git-lfs in case of large files)
     """
     def train(self):
