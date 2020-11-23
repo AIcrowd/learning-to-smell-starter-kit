@@ -1,3 +1,8 @@
+######################################################################################
+### This is read-only file so participants can run their codes locally.            ###
+### It will be over-writter during the evaluation, don't make any changes to this. ###
+######################################################################################
+
 import traceback
 import pandas as pd
 import os
@@ -14,7 +19,10 @@ class L2SPredictor:
 
     def evaluation(self):
         aicrowd_helpers.execution_start()
-        self.predict_setup()
+        try:
+            self.predict_setup()
+        except NotImplementedError:
+            print("predict_setup doesn't exist for this run, skipping...")
 
         aicrowd_helpers.execution_running()
         test_df = pd.read_csv(self.test_data_path)
@@ -44,3 +52,30 @@ class L2SPredictor:
             error = traceback.format_exc()
             print(error)
             aicrowd_helpers.execution_error(error)
+
+    """
+    You can do any preprocessing required for your codebase here like loading up models into memory, etc.
+    """
+    def predict_setup(self):
+        raise NotImplementedError
+
+    """
+    This function will be called for all the smiles string one by one during the evaluation.
+    The return need to be a list of list. Example: [["burnt", "oily", "rose"], ["fresh", "citrus", "green"]]
+    NOTE: In case you want to load your model, please do so in `predict_setup` function.
+    """
+    def predict(self, smile_string):
+        raise NotImplementedError
+
+    """
+    (optional)
+    Add your training code in this function, this will be called only during training locally.
+    This will not be executed during the evaluation, remember to save your models/pkl/artifacts properly.
+    You can upload them via git (git-lfs in case of large files)
+    """
+    def train(self):
+        raise NotImplementedError
+
+    """
+    You can define any new helper functions in your classes
+    """
