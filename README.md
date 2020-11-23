@@ -79,6 +79,15 @@ This file is used to identify your submission as a part of the Learning to Smell
 #### Submission environment configuration
 You can specify software runtime of your code by modifying the included [requirements.txt](requirements.txt). The submission support adding custom conda environment, apt packages, Dockerfile and lot's more. Guide for advanced users is present [here](https://discourse.aicrowd.com/t/how-to-specify-runtime-environment-for-your-submission/2274).
 
+#### Debug submission
+
+In order to test end to end pipeline, you can make debug submission as well by making `debug_submission: true` in `aicrowd.json`.
+
+* Wouldn't be counted towards your daily submission limit, and have seperate counter
+* Scores of such submission wouldn't be counted for the leaderboard
+* Testing data would be same as subset of training data
+* Logs of your code will be available to you
+
 #### Code Entrypoint
 The evaluator will use `run.sh` as the entrypoint, which in turn uses `predict.py`. Please remember to instantiate your class in the same or change `run.sh`.
 
