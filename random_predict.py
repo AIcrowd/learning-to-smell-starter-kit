@@ -14,6 +14,14 @@ class RandomPredictor(L2SPredictor):
     vocabulary_path = None
 
     """
+    You can do any preprocessing required for your codebase here like loading up models into memory, etc.
+    """
+    def predict_setup(self):
+        random.seed(42)
+        self.vocabulary = open(self.vocabulary_path).read().split()
+        pass
+
+    """
     This function will be called for all the smiles string one by one during the evaluation.
     The return need to be a list of list. Example: [["burnt", "oily", "rose"], ["fresh", "citrus", "green"]]
     NOTE: In case you want to load your model, please do so in `predict_setup` function.
@@ -30,21 +38,13 @@ class RandomPredictor(L2SPredictor):
         return SENTENCES
 
     """
-    You can do any preprocessing required for your codebase here like loading up models into memory, etc.
-    """
-    def predict_setup(self):
-        random.seed(42)
-        self.vocabulary = open(self.vocabulary_path).read().split()
-        pass
-
-    """
     (optional)
     Add your training code in this function, this will be called only during training locally.
     This will not be executed during the evaluation, remember to save your models/pkl/artifacts properly.
     You can upload them via git (git-lfs in case of large files)
     """
     def train(self):
-        pass
+        raise NotImplementedError()
 
 if __name__ == "__main__":
     submission = RandomPredictor()
