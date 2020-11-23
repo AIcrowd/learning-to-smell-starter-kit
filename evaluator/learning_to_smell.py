@@ -6,8 +6,24 @@
 import traceback
 import pandas as pd
 import os
+import signal
+from contextlib import contextmanager
 
 from evaluator import aicrowd_helpers
+
+
+class TimeoutException(Exception): pass
+
+@contextmanager
+def time_limit(seconds):
+    def signal_handler(signum, frame):
+        raise TimeoutException("Prediction timed out!")
+    signal.signal(signal.SIGALRM, signal_handler)
+    signal.alarm(seconds)
+    try:
+        yield
+    finally:
+        signal.alarm(0)
 
 
 class L2SPredictor:
@@ -16,11 +32,14 @@ class L2SPredictor:
         self.test_data_path = os.getenv("TEST_DATASET_PATH", "data/test.csv")
         self.vocabulary_path = os.getenv("VOCABULARY_PATH", "data/vocabulary.txt")
         self.predictions_output_path = os.getenv("PREDICTIONS_OUTPUT_PATH", "data/submission.csv")
+        self.predictions_setup_timeout = int(os.getenv("PREDICTION_SETUP_TIMEOUT_SECONDS", "600"))
+        self.predictions_timeout = int(os.getenv("PREDICTION_TIMEOUT_SECONDS", "1"))
 
     def evaluation(self):
         aicrowd_helpers.execution_start()
         try:
-            self.predict_setup()
+            with time_limit(self.predictions_setup_timeout):
+                self.predict_setup()
         except NotImplementedError:
             print("predict_setup doesn't exist for this run, skipping...")
 
@@ -29,7 +48,8 @@ class L2SPredictor:
 
         predictions = []
         for _, row in test_df.iterrows():
-            prediction_arr = self.predict(row['SMILES'])
+            with time_limit(self.predictions_timeout):
+                prediction_arr = self.predict(row['SMILES'])
             prediction = ';'.join([','.join(sorted(set(i))) for i in prediction_arr])
             predictions.append(prediction)
 
@@ -52,6 +72,8 @@ class L2SPredictor:
             error = traceback.format_exc()
             print(error)
             aicrowd_helpers.execution_error(error)
+            if not aicrowd_helpers.is_grading():
+                raise e
 
     """
     You can do any preprocessing required for your codebase here like loading up models into memory, etc.
