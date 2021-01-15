@@ -45,11 +45,13 @@ class L2SPredictor:
 
         aicrowd_helpers.execution_running()
         test_df = pd.read_csv(self.test_data_path)
+        vocabulary = set(open(self.vocabulary_path).read().split())
 
         predictions = []
         for _, row in test_df.iterrows():
             with time_limit(self.predictions_timeout):
                 prediction_arr = self.predict(row['SMILES'])
+            prediction_arr = list(map(lambda x: list(set(x) & vocabulary), prediction_arr))
             prediction = ';'.join([','.join(sorted(set(i))) for i in prediction_arr])
             predictions.append(prediction)
 
