@@ -81,7 +81,7 @@ You can specify software runtime of your code by modifying the included [require
 
 #### Debug submission
 
-In order to test end to end pipeline, you can make debug submission as well by making `debug_submission: true` in `aicrowd.json`.
+In order to test end to end pipeline, you can make debug submission as well by making `"debug": true` in `aicrowd.json`.
 
 * Wouldn't be counted towards your daily submission limit, and have seperate counter
 * Scores of such submission wouldn't be counted for the leaderboard
