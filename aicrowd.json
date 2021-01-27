@@ -5,5 +5,5 @@
     "description" : "Random prediction submission for L2S",
     "license" : "MIT",
     "gpu": false,
-    "debug": true
+    "debug": false
 }
