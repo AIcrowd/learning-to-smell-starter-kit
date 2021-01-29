@@ -11,3 +11,5 @@ dependencies:
      - aicrowd_api
      - scikit-learn
      - py4j
+     - tensorflow
+     - keras
