@@ -3,7 +3,7 @@ import random
 
 from evaluator import aicrowd_helpers
 from evaluator.learning_to_smell import L2SPredictor
-from feature_extractor import FeatureExtraction
+from feature_extractor import FeatureExtractor
 from tensorflow import keras
 from keras.models import model_from_json
 
@@ -53,7 +53,7 @@ class MyModel(L2SPredictor):
     """
     def predict(self, smile_string):
         smiles = pd.DataFrame([smile_string], columns=['SMILES'])
-        fe = FeatureExtraction(smiles)
+        fe = FeatureExtractor(smiles)
         fe.drop_for_test()
         df = fe.return_data()
         predictions = model.predict(df)
