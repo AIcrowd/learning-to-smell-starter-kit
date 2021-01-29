@@ -2,9 +2,8 @@ name: env
 channels:
  - defaults
  - conda-forge
- - ericmjl
 dependencies:
- - python=3.6
+ - python==3.6.8
  - rdkit
  - pip
  - pip:
