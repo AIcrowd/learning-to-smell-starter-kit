@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+pandas = "==0.25.3"
+aicrowd-api = "*"
+scikit-learn = "*"
+py4j = "*"
+tensorflow = "==1.9.0"
+Cython = "*"
+Keras = "==2.2.0"
+CGRtools = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"

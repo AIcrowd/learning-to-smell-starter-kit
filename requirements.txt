@@ -1,5 +1,11 @@
-pandas==1.0.3
+setuptools
+numpy
+Cython
+wheel
+pandas==0.25.3
 aicrowd_api
 scikit-learn
-numpy
 py4j
+tensorflow==1.9.0
+keras==2.2.0
+CGRtools
