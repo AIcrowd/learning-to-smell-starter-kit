@@ -1,15 +1,15 @@
 dependencies:
- - python==3.6
- - rdkit
+ - python
  - pip
  - pip:
      - setuptools
      - numpy
      - Cython
      - wheel
-     - pandas==0.25.3
+     - pandas
      - aicrowd_api
      - scikit-learn
      - py4j
      - tensorflow
      - keras
+     - CGRtools
