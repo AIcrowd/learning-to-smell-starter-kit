@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import rdkit
-from rdkit.Chem.Descriptors import MolWt
-from rdkit.Chem import Descriptors
+# import rdkit
+# from rdkit.Chem.Descriptors import MolWt
+# from rdkit.Chem import Descriptors
     
 class FeatureExtractor():
         
