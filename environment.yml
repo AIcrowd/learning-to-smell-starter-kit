@@ -1,12 +1,12 @@
 dependencies:
- - python
+ - python==3.6
  - pip
  - pip:
      - setuptools
      - numpy
      - Cython
      - wheel
-     - pandas
+     - pandas==0.25.3
      - aicrowd_api
      - scikit-learn
      - py4j
