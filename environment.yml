@@ -1,9 +1,5 @@
-name: env
-channels:
- - defaults
- - conda-forge
 dependencies:
- - python==3.5.0
+ - python==3.6
  - rdkit
  - pip
  - pip:
@@ -11,7 +7,7 @@ dependencies:
      - numpy
      - Cython
      - wheel
-     - pandas
+     - pandas==0.25.3
      - aicrowd_api
      - scikit-learn
      - py4j
