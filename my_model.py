@@ -6,6 +6,7 @@ from evaluator.learning_to_smell import L2SPredictor
 from feature_extractor import FeatureExtractor
 from tensorflow import keras
 from tensorflow.keras.models import Sequential, model_from_json
+import pandas as pd
 
 class MyModel(L2SPredictor):
 
