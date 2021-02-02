@@ -6,6 +6,7 @@
 
 import CGRtools
 import numpy as np
+import io
     
 class FeatureExtractor():
         
