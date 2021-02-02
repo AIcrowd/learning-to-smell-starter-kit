@@ -81,34 +81,105 @@ class FeatureExtractorCGR():
             reader = CGRtools.files.SMILESRead(io.StringIO(None))
             smiles = str(x)
             mol = reader.parse(smiles)
-            rings = mol.aromatic_rings
-            return len(rings)
+            n_rings = mol.rings_count
+            return n_rings
         except AttributeError:
             return 0
 
     def _num_of_rings(self):
         self.df['num_of_rings'] = self.df.SMILES.apply(lambda x: self.get_num_of_rings(x))
 
-    def _get_num_of_atoms(self):
-        self.df['num_of_atoms'] = np.nan
+    def get_num_of_atoms_in_rings(self, x):
+        try:
+            reader = CGRtools.files.SMILESRead(io.StringIO(None))
+            smiles = str(x)
+            mol = reader.parse(smiles)
+            atoms = mol.ring_atoms
+            return len(list(atoms))
+        except AttributeError:
+            return 0
+
+    def _num_of_atoms_in_rings(self):
+        self.df['num_of_atoms_in_rings'] = self.df.SMILES.apply(lambda x: self.get_num_of_atoms_in_rings(x))
+
+    def get_num_of_atoms(self, x):
+        try:
+            reader = CGRtools.files.SMILESRead(io.StringIO(None))
+            smiles = str(x)
+            mol = reader.parse(smiles)
+            n_atoms = mol.atoms_count
+            return n_atoms
+        except AttributeError:
+            return 0
+
+    def _num_of_atoms(self):
+        self.df['num_of_atoms'] = self.df.SMILES.apply(lambda x: self.get_num_of_atoms(x))
     
-    def _get_num_of_heavy_atoms(self):
-        self.df['num_of_heavy_atoms'] = np.nan
+    def get_num_of_H_atoms(self, x):
+        try:
+            reader = CGRtools.files.SMILESRead(io.StringIO(None))
+            smiles = str(x)
+            mol = reader.parse(smiles)
+            h_atoms = mol.explicify_hydrogens()
+            return h_atoms
+        except ValenceError:
+            return 0
+
+    def _num_of_heavy_atoms(self):
+        self.df['num_of_heavy_atoms'] = self.df.SMILES.apply(lambda x: self.get_num_of_H_atoms(x))
 
     def _calculate_lipophilicity(self):
         self.df['logP'] = np.nan
-        
+    
+    def get_huckel_pi(self, x):
+        try:
+            reader = CGRtools.files.SMILESRead(io.StringIO(None))
+            smiles = str(x)
+            mol = reader.parse(smiles)
+            huckel_pi = mol.huckel_pi_electrons_energy
+            return huckel_pi
+        except AttributeError:
+            return 0
+
+    def _huckel_pi_electrons_energy(self):
+        self.df['huckel_pi'] = self.df.SMILES.apply(lambda x: self.get_huckel_pi(x))
+
+    def get_molecular_mass(self, x):
+        try:
+            reader = CGRtools.files.SMILESRead(io.StringIO(None))
+            smiles = str(x)
+            mol = reader.parse(smiles)
+            molecular_mass = mol.molecular_mass
+            return molecular_mass
+        except AttributeError:
+            return 0
+
+    def _molecular_mass(self):
+        self.df['molecular_mass'] = self.df.SMILES.apply(lambda x: self.get_molecular_mass(x))
+
     def _len_smiles(self):
         self.df['len_smiles'] = self.df.SMILES.apply(lambda x: len(list(x)))
 
+    def get_atom_number(self, atomic_symbol, x):
+          try:
+              reader = CGRtools.files.SMILESRead(io.StringIO(None))
+              smiles = str(x)
+              mol = reader.parse(smiles)
+              count=0
+              for a in range(1, mol.atoms_count+1):
+                if mol.atom(a).atomic_symbol == atomic_symbol:
+                  count+=1
+              return count
+          except AttributeError:
+              return 0
+
     def _number_of_atoms(self):
         atom_list = ['C', 'O', 'N', 'Cl', 'Br', 'F', 'S']
-        for atom in atom_list:
-            self.df['num_of_{}_atoms'.format(atom)] = np.nan
+        for atomic_symbol in atom_list:
+            self.df['num_of_{}_atoms'.format(atomic_symbol)] = self.df.SMILES.apply(lambda x: self.get_atom_number(atomic_symbol, x))
 
     def _add_descriptors_features(self):
         self.df['tpsa'] = np.nan
-        self.df['mol_w'] = np.nan
         self.df['num_valence_electrons'] = np.nan
         self.df['num_heteroatoms'] = np.nan
 
@@ -120,9 +191,13 @@ class FeatureExtractorCGR():
 
     def extract_features(self):
         self._num_of_rings()
-        self._get_num_of_atoms()
-        self._get_num_of_heavy_atoms()
-        self._calculate_lipophilicity()
+        self._num_of_atoms_in_rings()
+        self._num_of_atoms()
+        # self._num_of_heavy_atoms()
+        # self._calculate_lipophilicity()
+        self._huckel_pi_electrons_energy()
+        self._molecular_mass()
         self._len_smiles()
         self._number_of_atoms()
-        self._add_descriptors_features()
+        # self._add_descriptors_features()
+        
