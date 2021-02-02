@@ -68,8 +68,8 @@ class MyModel(L2SPredictor):
         df = fe.return_data()
         predictions = self.model.predict(df)
         sorted_predictions = self.sorted_predictions_with_labels(predictions)
-        SENTANCES = self.return_sentences(sorted_predictions)
-        return SENTENCES
+        sentences = self.return_sentences(sorted_predictions)
+        return sentences
 
     """
     (optional)
