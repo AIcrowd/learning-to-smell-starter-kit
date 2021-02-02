@@ -84,7 +84,7 @@ class FeatureExtractorCGR():
         return len(rings)
 
     def _num_of_rings(self):
-        self.df['num_of_rings'] = self.df.SMILES.apply(lambda x: len(self.get_num_of_rings(x)))
+        self.df['num_of_rings'] = self.df.SMILES.apply(lambda x: self.get_num_of_rings(x))
 
     def _get_num_of_atoms(self):
         self.df['num_of_atoms'] = np.nan
