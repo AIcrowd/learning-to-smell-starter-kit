@@ -3,7 +3,7 @@ import random
 
 from evaluator import aicrowd_helpers
 from evaluator.learning_to_smell import L2SPredictor
-from feature_extractor import FeatureExtractor
+from feature_extractor import FeatureExtractorCGR
 from tensorflow import keras
 from tensorflow.keras.models import Sequential, model_from_json
 import pandas as pd
@@ -54,9 +54,9 @@ class MyModel(L2SPredictor):
     """
     def predict(self, smile_string):
         smiles = pd.DataFrame([smile_string], columns=['SMILES'])
-        # fe = FeatureExtractor(smiles)
-        # fe.drop_for_test()
-        # df = fe.return_data()
+        fe = FeatureExtractorCGR(smiles)
+        fe.drop_for_test()
+        df = fe.return_data()
         predictions = model.predict(df)
         sorted_predictions = self.sorted_predictions_with_labels(predictions)
         SENTANCES = self.return_sentences(sorted_predictions)

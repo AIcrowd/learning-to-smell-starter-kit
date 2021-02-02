@@ -3,6 +3,8 @@
 # import rdkit
 # from rdkit.Chem.Descriptors import MolWt
 # from rdkit.Chem import Descriptors
+
+import CGRtools
     
 class FeatureExtractor():
         
@@ -66,3 +68,15 @@ class FeatureExtractor():
         self._number_of_atoms()
         self._add_descriptors_features()
         
+class FeatureExtractorCGR():
+
+      def __init__(self, smiles):
+        self.df = df
+        self.extract_features()
+
+    def extract_features(self):
+        reader = CGRtools.files.SMILESRead(io.StringIO(None))
+        smiles = str(self.smiles)
+        mol = reader.parse(smiles)
+        rings = mol.aromatic_rings
+        print(len(rings))
