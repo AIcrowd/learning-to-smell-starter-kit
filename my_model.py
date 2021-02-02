@@ -24,8 +24,9 @@ class MyModel(L2SPredictor):
        json_file = open('model.json', 'r')
        loaded_model_json = json_file.read()
        json_file.close()
-       model = model_from_json(loaded_model_json)
-       model.load_weights("model.h5")
+       self.model = model_from_json(loaded_model_json)
+       self.model.load_weights("model.h5")
+       pass
     
     def sorted_predictions_with_labels(self, predictions):
         sorted_predictions = []
@@ -57,7 +58,7 @@ class MyModel(L2SPredictor):
         fe = FeatureExtractorCGR(smiles_df)
         fe.drop_for_test()
         df = fe.return_data()
-        predictions = model.predict(df)
+        predictions = self.model.predict(df)
         sorted_predictions = self.sorted_predictions_with_labels(predictions)
         SENTANCES = self.return_sentences(sorted_predictions)
         return SENTENCES
@@ -72,7 +73,6 @@ class MyModel(L2SPredictor):
         raise NotImplementedError()
 
 if __name__ == "__main__":
-    self.predict_setup()
     submission = MyModel()
     submission.run()
     print("Successfully generated predictions!")
