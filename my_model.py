@@ -72,6 +72,7 @@ class MyModel(L2SPredictor):
         raise NotImplementedError()
 
 if __name__ == "__main__":
-    submission = RandomPredictor()
+    self.predict_setup()
+    submission = MyModel()
     submission.run()
     print("Successfully generated predictions!")
