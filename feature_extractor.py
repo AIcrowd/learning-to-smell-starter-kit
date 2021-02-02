@@ -77,11 +77,14 @@ class FeatureExtractorCGR():
         self.extract_features()
 
     def get_num_of_rings(self, x):
-        reader = CGRtools.files.SMILESRead(io.StringIO(None))
-        smiles = str(x)
-        mol = reader.parse(smiles)
-        rings = mol.aromatic_rings
-        return len(rings)
+        try:
+            reader = CGRtools.files.SMILESRead(io.StringIO(None))
+            smiles = str(x)
+            mol = reader.parse(smiles)
+            rings = mol.aromatic_rings
+            return len(rings)
+        except AttributeError:
+            return 0
 
     def _num_of_rings(self):
         self.df['num_of_rings'] = self.df.SMILES.apply(lambda x: self.get_num_of_rings(x))
