@@ -5,6 +5,7 @@
 # from rdkit.Chem import Descriptors
 
 import CGRtools
+import numpy as np
     
 class FeatureExtractor():
         
@@ -70,13 +71,54 @@ class FeatureExtractor():
         
 class FeatureExtractorCGR():
 
-      def __init__(self, smiles):
+    def __init__(self, df):
         self.df = df
         self.extract_features()
 
-    def extract_features(self):
+    def get_num_of_rings(self, x):
         reader = CGRtools.files.SMILESRead(io.StringIO(None))
-        smiles = str(self.smiles)
+        smiles = str(x)
         mol = reader.parse(smiles)
         rings = mol.aromatic_rings
-        print(len(rings))
+        return len(rings)
+
+    def _num_of_rings(self):
+        self.df['num_of_rings'] = self.df.SMILES.apply(lambda x: len(self.get_num_of_rings(self, x)))
+
+    def _get_num_of_atoms(self):
+        self.df['num_of_atoms'] = np.nan
+    
+    def _get_num_of_heavy_atoms(self):
+        self.df['num_of_heavy_atoms'] = np.nan
+
+    def _calculate_lipophilicity(self):
+        self.df['logP'] = np.nan
+        
+    def _len_smiles(self):
+        self.df['len_smiles'] = self.df.SMILES.apply(lambda x: len(list(x)))
+
+    def _number_of_atoms(self):
+        atom_list = ['C', 'O', 'N', 'Cl', 'Br', 'F', 'S']
+        for atom in atom_list:
+            self.df['num_of_{}_atoms'.format(atom)] = np.nan
+
+    def _add_descriptors_features(self):
+        self.df['tpsa'] = np.nan
+        self.df['mol_w'] = np.nan
+        self.df['num_valence_electrons'] = np.nan
+        self.df['num_heteroatoms'] = np.nan
+
+    def drop_for_test(self):
+        self.df = self.df.drop(['SMILES'], axis=1)
+    
+    def return_data(self):
+        return self.df
+
+    def extract_features(self):
+        self._num_of_rings()
+        self._get_num_of_atoms()
+        self._get_num_of_heavy_atoms()
+        self._calculate_lipophilicity()
+        self._len_smiles()
+        self._number_of_atoms()
+        self._add_descriptors_features()

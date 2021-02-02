@@ -53,8 +53,8 @@ class MyModel(L2SPredictor):
     NOTE: In case you want to load your model, please do so in `predict_setup` function.
     """
     def predict(self, smile_string):
-        smiles = pd.DataFrame([smile_string], columns=['SMILES'])
-        fe = FeatureExtractorCGR(smiles)
+        smiles_df = pd.DataFrame([smile_string], columns=['SMILES'])
+        fe = FeatureExtractorCGR(smiles_df)
         fe.drop_for_test()
         df = fe.return_data()
         predictions = model.predict(df)
