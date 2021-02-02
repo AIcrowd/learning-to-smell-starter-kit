@@ -26,10 +26,18 @@ class MyModel(L2SPredictor):
        json_file.close()
        self.model = model_from_json(loaded_model_json)
        self.model.load_weights("model.h5")
+       self.voc = pd.read_csv(vocabulary_path, sep='\n', header=None)
        pass
+
+    def create_label_list(self):
+        s = set()
+        for item in self.voc.values:
+            s.add(item[0])
+        return sorted(list(s))
     
     def sorted_predictions_with_labels(self, predictions):
         sorted_predictions = []
+        LABEL_LIST = self.create_label_list()
         for prediction in predictions:
             _z = zip(LABEL_LIST, prediction)
             sorted_z = sorted(_z, key=lambda tup: tup[1], reverse=True)
