@@ -161,17 +161,11 @@ class FeatureExtractorCGR():
         self.df['len_smiles'] = self.df.SMILES.apply(lambda x: len(list(x)))
 
     def get_atom_number(self, atomic_symbol, x):
-          try:
-              reader = CGRtools.files.SMILESRead(io.StringIO(None))
-              smiles = str(x)
-              mol = reader.parse(smiles)
-              count=0
-              for a in range(1, mol.atoms_count+1):
-                if mol.atom(a).atomic_symbol == atomic_symbol:
-                  count+=1
-              return count
-          except AttributeError:
-              return 0
+        count=0
+        for atom in list(x):
+          if atom.lower() == atomic_symbol.lower():
+              count+=1
+        return count
 
     def _number_of_atoms(self):
         atom_list = ['C', 'O', 'N', 'Cl', 'Br', 'F', 'S']
@@ -200,4 +194,3 @@ class FeatureExtractorCGR():
         self._len_smiles()
         self._number_of_atoms()
         # self._add_descriptors_features()
-        
