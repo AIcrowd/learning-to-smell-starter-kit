@@ -27,7 +27,19 @@ class MyModel(L2SPredictor):
        self.model = model_from_json(loaded_model_json)
        self.model.load_weights("model.h5")
        self.voc = pd.read_csv(self.vocabulary_path, sep='\n', header=None)
+       self.preprocessing_setup()
        pass
+
+    def preprocessing_setup(self):
+        self.df_test = pd.read_csv(self.test_data_path)
+        fe = FeatureExtractorCGR(self.df_test)
+        self.df_data = fe.return_data() 
+
+    def return_data_for_smile(self, smile_string):
+        QUERY = 'SMILES == "{0}"'.format(smile_string)
+        df = self.df_data.query(QUERY)
+        df = df.drop(['SMILES'], axis=1)
+        return df 
 
     def create_label_list(self):
         s = set()
@@ -62,10 +74,7 @@ class MyModel(L2SPredictor):
     NOTE: In case you want to load your model, please do so in `predict_setup` function.
     """
     def predict(self, smile_string):
-        smiles_df = pd.DataFrame([smile_string], columns=['SMILES'])
-        fe = FeatureExtractorCGR(smiles_df)
-        fe.drop_for_test()
-        df = fe.return_data()
+        df = self.return_data_for_smile(smile_string)
         predictions = self.model.predict(df)
         sorted_predictions = self.sorted_predictions_with_labels(predictions)
         sentences = self.return_sentences(sorted_predictions)
