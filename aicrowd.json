@@ -1,8 +1,8 @@
 {
     "challenge_id" : "learning-to-smell",
     "grader_id": "learning-to-smell",
-    "authors" : ["shivam"],
-    "description" : "Random prediction submission for L2S",
+    "authors" : ["kamil_kurach"],
+    "description" : "my_model",
     "license" : "MIT",
     "gpu": false,
     "debug": false
