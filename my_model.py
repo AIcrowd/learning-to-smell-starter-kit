@@ -7,6 +7,7 @@ from feature_extractor import FeatureExtractorCGR
 from tensorflow import keras
 from tensorflow.keras.models import Sequential, model_from_json
 import pandas as pd
+import numpy as np
 
 class MyModel(L2SPredictor):
 
@@ -36,10 +37,17 @@ class MyModel(L2SPredictor):
         self.df_data = fe.return_data() 
 
     def return_data_for_smile(self, smile_string):
-        QUERY = 'SMILES == "{0}"'.format(smile_string)
-        df = self.df_data.query(QUERY)
-        df = df.drop(['SMILES'], axis=1)
-        return df 
+        try:
+            QUERY = 'SMILES == "{0}"'.format(smile_string)
+            df = self.df_data.query(QUERY)
+            df = df.drop(['SMILES'], axis=1)
+            return df 
+        except:
+            size = len(self.df_data.columns)
+            columns = self.df_data.columns
+            df = pd.DataFrame(data=[np.zeros(size)], columns=columns)
+            df = df.drop(['SMILES'], axis=1)
+            return df
 
     def create_label_list(self):
         s = set()
