@@ -29,6 +29,7 @@ def time_limit(seconds):
 class L2SPredictor:
     def __init__(self):
         self.training_data_path = os.getenv("TRAINING_DATASET_PATH", os.getcwd() + "/data/train.csv")
+        self.training_additional_data_path = os.getenv("TRAINING_ADDITIONAL_DATASET_PATH", os.getcwd() + "/data/train-additional.csv")
         self.test_data_path = os.getenv("TEST_DATASET_PATH", os.getcwd() + "/data/test.csv")
         self.vocabulary_path = os.getenv("VOCABULARY_PATH", os.getcwd() + "/data/vocabulary.txt")
         self.predictions_output_path = os.getenv("PREDICTIONS_OUTPUT_PATH", os.getcwd() + "/data/submission.csv")

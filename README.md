@@ -30,6 +30,7 @@ and put them in the `data/` folder. This should give you a folder structure simi
 ├── data
 │   ├── test.csv
 │   ├── train.csv
+│   ├── train-additional.csv
 │   └── vocabulary.txt
 ```
 
@@ -100,6 +101,7 @@ class SuperCoolPredictor:
     Below paths will be preloaded for you, you can read them as you like.
     """
     self.training_data_path = None
+    self.training_additional_data_path = None
     self.test_data_path = None
     self.vocabulary_path = None
 
