@@ -83,7 +83,6 @@ class MyModel(L2SPredictor):
     """
     def predict(self, smile_string):
         df = self.return_data_for_smile(smile_string)
-        print(df.shape)
         predictions = self.model.predict(df)
         sorted_predictions = self.sorted_predictions_with_labels(predictions)
         sentences = self.return_sentences(sorted_predictions)
