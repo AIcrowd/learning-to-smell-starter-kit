@@ -185,7 +185,7 @@ class FeatureExtractorCGR():
         self.df = self.df.drop(['SMILES'], axis=1)
     
     def return_data(self):
-        self.df = self.df.dropna()
+        # self.df = self.df.dropna()
         return self.df
 
     def extract_features(self):
