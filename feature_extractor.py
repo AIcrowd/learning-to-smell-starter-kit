@@ -116,14 +116,18 @@ class FeatureExtractorCGR():
         self.df['num_of_atoms'] = self.df.SMILES.apply(lambda x: self.get_num_of_atoms(x))
     
     def get_num_of_H_atoms(self, x):
-        try:
-            reader = CGRtools.files.SMILESRead(io.StringIO(None))
-            smiles = str(x)
-            mol = reader.parse(smiles)
-            h_atoms = mol.explicify_hydrogens()
-            return h_atoms
-        except ValenceError:
-            return 0
+       try:
+        reader = CGRtools.files.SMILESRead(io.StringIO(None))
+        mol = reader.parse(str(x))
+        mol.kekule()
+        mol.check_thiele(fast=False)
+        if len(mol.check_valence()) != 0:
+          return np.nan
+        else:
+          h_atoms = mol.explicify_hydrogens()
+          return int(h_atoms)
+       except AttributeError:
+        return np.nan
 
     def _num_of_heavy_atoms(self):
         self.df['num_of_heavy_atoms'] = self.df.SMILES.apply(lambda x: self.get_num_of_H_atoms(x))
@@ -181,13 +185,14 @@ class FeatureExtractorCGR():
         self.df = self.df.drop(['SMILES'], axis=1)
     
     def return_data(self):
+        self.df = self.df.dropna()
         return self.df
 
     def extract_features(self):
         self._num_of_rings()
         self._num_of_atoms_in_rings()
         self._num_of_atoms()
-        # self._num_of_heavy_atoms()
+        self._num_of_heavy_atoms()
         # self._calculate_lipophilicity()
         self._huckel_pi_electrons_energy()
         self._molecular_mass()
