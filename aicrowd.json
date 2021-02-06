@@ -5,5 +5,5 @@
     "description" : "my_model",
     "license" : "MIT",
     "gpu": false,
-    "debug": false
+    "debug": true
 }
