@@ -5,7 +5,7 @@ from evaluator import aicrowd_helpers
 from evaluator.learning_to_smell import L2SPredictor
 from feature_extractor import FeatureExtractorRDKIT
 from tensorflow import keras
-from tensorflow.keras.models import Sequential, model_from_json
+from tensorflow.keras.models import model_from_json
 import pandas as pd
 import numpy as np
 
