@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-# import rdkit
-# from rdkit.Chem.Descriptors import MolWt
-# from rdkit.Chem import Descriptors
+import rdkit
+from rdkit.Chem.Descriptors import MolWt
+from rdkit.Chem import Descriptors
 
-import CGRtools
-import numpy as np
-import io
+# import CGRtools
+# import numpy as np
+# import io
     
-class FeatureExtractor():
+class FeatureExtractorRDKIT():
         
     def __init__(self, df):
         self.df = df

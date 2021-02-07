@@ -3,7 +3,7 @@ import random
 
 from evaluator import aicrowd_helpers
 from evaluator.learning_to_smell import L2SPredictor
-from feature_extractor import FeatureExtractorCGR
+from feature_extractor import FeatureExtractorRDKIT
 from tensorflow import keras
 from tensorflow.keras.models import Sequential, model_from_json
 import pandas as pd
@@ -33,7 +33,7 @@ class MyModel(L2SPredictor):
 
     def preprocessing_setup(self):
         self.df_test = pd.read_csv(self.test_data_path)
-        fe = FeatureExtractorCGR(self.df_test)
+        fe = FeatureExtractorRDKIT(self.df_test)
         self.df_data = fe.return_data() 
 
     def return_data_for_smile(self, smile_string):

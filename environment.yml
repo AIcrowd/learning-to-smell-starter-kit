@@ -1,0 +1,15 @@
+dependencies:
+ - python
+ - rdkit
+ - tensorflow
+ - keras
+ - pip
+ - pip:
+     - setuptools
+     - numpy
+     - Cython
+     - wheel
+     - pandas
+     - aicrowd_api
+     - scikit-learn
+     - py4j
