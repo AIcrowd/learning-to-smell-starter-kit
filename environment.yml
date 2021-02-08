@@ -4,9 +4,6 @@ channels:
   - defaults
 dependencies:
  - python
- - boost-cpp
- - boost
- - py-boost
  - rdkit
  - tensorflow==2.3.0
  - keras==2.3.1
