@@ -24,16 +24,16 @@ class FeatureExtractorRDKIT():
         ri = x.GetRingInfo()
         return ri.AtomRings()
 
-    def _calculate_rings(self):
+    def _num_of_rings(self):
         self.df['num_of_rings'] = self.df.MOL.apply(lambda x: len(self.get_ring_info(x)))
         
-    def _get_num_of_atoms(self):
-        self.df['num_of_atoms'] = self.df.MOL.apply(lambda x: x.GetNumAtoms())
+    def _num_of_atoms_in_mol(self):
+        self.df['num_of_atoms_in_mol'] = self.df.MOL.apply(lambda x: x.GetNumAtoms())
     
-    def _get_num_of_heavy_atoms(self):
-        self.df['num_of_heavy_atoms'] = self.df.MOL.apply(lambda x: x.GetNumHeavyAtoms())
+    def _num_of_heavy_atoms_in_mol(self):
+        self.df['num_of_heavy_atoms_in_mol'] = self.df.MOL.apply(lambda x: x.GetNumHeavyAtoms())
 
-    def _calculate_lipophilicity(self):
+    def _lipophilicity(self):
         self.df['logP'] = self.df.MOL.apply(lambda x: rdkit.Chem.Crippen.MolLogP(x))
 
     def _molMR(self):
@@ -65,10 +65,10 @@ class FeatureExtractorRDKIT():
     def extract_features(self):
         self._get_mol_object()
         self._add_h_atoms()
-        self._calculate_rings()
-        self._get_num_of_atoms()
-        self._get_num_of_heavy_atoms()
-        self._calculate_lipophilicity()
+        self._num_of_rings()
+        self._num_of_atoms_in_mol()
+        self._num_of_heavy_atoms_in_mol()
+        self._lipophilicity()
         self._molMR()
         self._len_smiles()
         self._number_of_atoms()
