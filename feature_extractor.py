@@ -35,6 +35,9 @@ class FeatureExtractorRDKIT():
 
     def _calculate_lipophilicity(self):
         self.df['logP'] = self.df.MOL.apply(lambda x: rdkit.Chem.Crippen.MolLogP(x))
+
+    def _molMR(self):
+        self.df['molMR'] = self.df.MOL.apply(lambda x: rdkit.Chem.Crippen.MolMR(x))
         
     def _len_smiles(self):
         self.df['len_smiles'] = self.df.SMILES.apply(lambda x: len(list(x)))
@@ -66,6 +69,7 @@ class FeatureExtractorRDKIT():
         self._get_num_of_atoms()
         self._get_num_of_heavy_atoms()
         self._calculate_lipophilicity()
+        self._molMR()
         self._len_smiles()
         self._number_of_atoms()
         self._add_descriptors_features()
