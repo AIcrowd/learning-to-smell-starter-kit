@@ -43,7 +43,7 @@ class FeatureExtractorRDKIT():
         self.df['len_smiles'] = self.df.SMILES.apply(lambda x: len(list(x)))
         
     def _number_of_atoms(self):
-        atom_list = ['C','O', 'N', 'Cl', 'Br', 'F', 'N', 'S']
+        atom_list = ['C','O', 'N', 'Cl', 'Br', 'F', 'S']
         for atom in atom_list:
             self.df['num_of_{}_atoms'.format(atom)] = self.df.MOL.apply(lambda x: len(x.GetSubstructMatches(rdkit.Chem.MolFromSmiles(atom))))
 
